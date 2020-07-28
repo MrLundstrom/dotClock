@@ -1,0 +1,72 @@
+html{
+  height:100%;
+  width: 100%;
+}
+
+body{
+    display:grid;
+    grid-template-columns: auto auto auto auto auto;
+    grid-template-rows: auto auto auto auto auto;
+    margin:0;
+    padding:0;
+    background-color: #20000f;
+    height:100%;
+    width: 100%;
+}
+.container{
+    display:flex;
+    margin: 0 auto;
+}
+.time{
+    display:flex;
+    flex-wrap: wrap;
+    width: 264px;
+    margin:12px;
+    transition: 0.5s;
+}
+.divider {
+    display:flex;
+    flex-wrap: wrap;
+    width: 24px;
+    transition: 0.5s;
+    margin:12px;
+}
+.round{
+    width:18px;
+    height:18px;
+    margin:3px;
+    border-radius: 9px;
+    background-color: #e31d1d;
+    box-shadow: 0 0 15px #e31d1d;
+    opacity: 0.0;
+    transition: 0.2s;
+
+}
+.filler{
+  z-index: 1;
+    flex-direction: row;
+    margin:0 auto;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100%;
+    width: 100%;
+    box-sizing: border-box;
+    padding: 3%;
+}
+.showSecs{
+    flex-direction: row;
+    margin:0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+.bg{
+  position: fixed;
+  background-image: url(preview.jp);
+  width:100%;
+  height:100%;
+  background-position: center;
+  background-size: cover;
+  z-index: 0;
+  }

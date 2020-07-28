@@ -1,0 +1,120 @@
+{
+	"contentrating" : "Everyone",
+	"description" : "[h1] --- DotClock --- [/h1]\r\nA minimalistic clock that mimics a led-diod clock / low resolution screen clock.\r\n\r\n[h1]--- Features --- [/h1]\r\n* Switch between 12/24hr format.\r\n* Set your own background-image.\r\n* Set size of the glow.\r\n* Adjust backgroundcolor.\r\n* Change the color of the clock.\r\n* Change the size of the clock.\r\n* Toggle to show/hide seconds.\r\n* Different colors on hours, minutes and seconds.\r\n* Chose the location for the clock.\r\n\r\n[h1]--- Bugs & Suggestions --- [/h1]\r\nIf you notice anything not working as it should or want me to add something, write a comment.\r\n\r\n[h1]--- Performance --- [/h1]\r\nThis wallpaper is quite lightweight, but if you would like to improve performance still, turn off \"show Seconds\".",
+	"file" : "index.html",
+	"general" : 
+	{
+		"properties" : 
+		{
+			"PositionSlider" : 
+			{
+				"max" : 5,
+				"min" : 1,
+				"order" : 9,
+				"text" : "Y position",
+				"type" : "slider",
+				"value" : 3
+			},
+			"PositionSlider2" : 
+			{
+				"max" : 5,
+				"min" : 1,
+				"order" : 9,
+				"text" : "X position",
+				"type" : "slider",
+				"value" : 3
+			},
+			"custombool" : 
+			{
+				"order" : 2,
+				"text" : "ColorMode",
+				"type" : "bool",
+				"value" : false
+			},
+			"custombool1" : 
+			{
+				"order" : 1,
+				"text" : "Show Seconds",
+				"type" : "bool",
+				"value" : true
+			},
+			"custombool2" : 
+			{
+				"order" : 12,
+				"text" : "12 Hour format",
+				"type" : "bool",
+				"value" : false
+			},
+			"customcolor1" : 
+			{
+				"condition" : "custombool.value == false",
+				"order" : 6,
+				"text" : "Clockcolor",
+				"type" : "color",
+				"value" : "0.66 0.22 0.22"
+			},
+			"customcolor2" : 
+			{
+				"condition" : "custombool.value",
+				"order" : 3,
+				"text" : "Hours",
+				"type" : "color",
+				"value" : "0.66 0.22 0.22"
+			},
+			"customcolor3" : 
+			{
+				"condition" : "custombool.value",
+				"order" : 4,
+				"text" : "Minutes",
+				"type" : "color",
+				"value" : "0.66 0.22 0.22"
+			},
+			"customcolor4" : 
+			{
+				"condition" : "custombool.value && custombool1.value",
+				"order" : 5,
+				"text" : "Seconds",
+				"type" : "color",
+				"value" : "0.66 0.22 0.22"
+			},
+			"customimage" : 
+			{
+				"text" : "Background-image",
+				"type" : "file"
+			},
+			"glowSlider" : 
+			{
+				"max" : 100,
+				"min" : 0,
+				"order" : 7,
+				"text" : "Glow Size",
+				"type" : "slider",
+				"value" : 50
+			},
+			"schemecolor" : 
+			{
+				"order" : 0,
+				"text" : "Backgroundcolor",
+				"type" : "color",
+				"value" : "0.1 0.0 0.0"
+			},
+			"sizeSlider" : 
+			{
+				"max" : 10,
+				"min" : 1,
+				"order" : 8,
+				"text" : "Clock Size",
+				"type" : "slider",
+				"value" : 3
+			}
+		}
+	},
+	"monetization" : false,
+	"preview" : "preview.jpg",
+	"tags" : [ "Abstract" ],
+	"title" : "Dot Clock",
+	"type" : "web",
+	"version" : 0,
+	"visibility" : "public",
+	"workshopid" : "897347504"
+}
