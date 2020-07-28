@@ -1,5 +1,5 @@
 # dotClock
-A wallpaper for the application wallpaperengine. Made with html, javascript and css.
+A wallpaper for the application Wallpaper Engine on Steam. Made with html, javascript and css.
 Live version @ https://steamcommunity.com/sharedfiles/filedetails/?id=897347504&searchtext=dotclock
 
 Mimics an old school led/digital clock
