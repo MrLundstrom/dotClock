@@ -8,30 +8,31 @@ var twelvehour = false;
 var twelve;
 var times = ['hours', 'mins', 'secs', '12HR'];
 var dividers = ['divider1', 'divider2'];
+var party = false;
 
 // Setup
 function myFunction() {
-    setInterval(Clock, 500);
+    setInterval(Clock, 250);
     var div = document.getElementById("hours");
-    Create("h", div, 77);
+    Create("hours", "h", div, 77);
     div = document.getElementById("divider1");
-    Create("D", div, 7);
+    Create("divide", "D", div, 7);
     div = document.getElementById("mins");
-    Create("m", div, 77);
+    Create("mins", "m", div, 77);
     div = document.getElementById("divider2");
-    Create("DD", div, 7);
+    Create("divide", "DD", div, 7);
     div = document.getElementById("secs");
-    Create("s", div, 77);
+    Create("secs", "s", div, 77);
     div = document.getElementById("12HR");
-    Create("12hr", div, 77);
+    Create("ampm", "12hr", div, 77);
     setDivider();
 }
 
 // Create divs
-function Create(time, div, size) {
+function Create(type, time, div, size) {
     var text = "";
     for (var i = 1; i <= size; i++) {
-        text += "<div class='round' id='" + time + i + "'></div>";
+        text += "<div class='round " + type + "' id='" + time + i + "'></div>";
     }
     div.innerHTML = text;
 }
@@ -47,34 +48,34 @@ function Clock() {
     s = checkTime(s) + "";
 
     // HOURS
-    if (hh != h || twelve != twelvehour) {
-        twelve = twelvehour;
-        h = hh;
-        if (twelvehour == true) {
-            if (h < 12) {
-                convert(0, 10, "12hr");
-            } else {
-                convert(0, 11, "12hr");
-            }
-            convert(1, 12, "12hr");
+    //if (hh != h || twelve != twelvehour) {
+    twelve = twelvehour;
+    h = hh;
+    if (twelvehour == true) {
+        if (h < 12) {
+            convert(0, 10, "12hr");
+        } else {
+            convert(0, 11, "12hr");
         }
-        h = check12hour(h);
-        h = checkTime(h) + "";
-        for (var i = 0; i < 2; i++) {
-            var split = (("" + h).split(""));
-            convert(i, split[i], "h");
-        }
+        convert(1, 12, "12hr");
     }
+    h = check12hour(h);
+    h = checkTime(h) + "";
+    for (var i = 0; i < 2; i++) {
+        var split = (("" + h).split(""));
+        convert(i, split[i], "h");
+    }
+    //}
 
     //MINS
-    if (mm != m) {
-        m = mm;
-        m = checkTime(m) + "";
-        for (var k = 0; k < 2; k++) {
-            var split2 = (("" + m).split(""));
-            convert(k, split2[k], "m");
-        }
+    //if (mm != m) {
+    m = mm;
+    m = checkTime(m) + "";
+    for (var k = 0; k < 2; k++) {
+        var split2 = (("" + m).split(""));
+        convert(k, split2[k], "m");
     }
+    //}
 
     //Seconds
     if (showSecs === true) {
@@ -97,6 +98,18 @@ function checkTime(i) {
         i = "0" + i;
     }
     return i
+}
+function randomColor() {
+    for (let i = 0; i < 3; i++) {
+        string = [Math.random(), Math.random(), Math.random()]
+    }
+    return RGBString(string);
+}
+function RGBString(values) {
+    values = values.map(function (c) {
+        return Math.ceil(c * 255);
+    });
+    return 'rgb(' + values + ')'
 }
 
 // Set numbers to figures
@@ -157,6 +170,11 @@ function convert(place, number, type) {
 function time(item) {
     var dot = document.getElementById(item);
     dot.style.opacity = "1.0";
+    if (party && dot.className != "round ampm") {
+        let color = randomColor()
+        dot.style.backgroundColor = color;
+        dot.style.boxShadow = "0px 0px " + myIntValue + "px " + color;
+    }
 }
 // hide dot
 function clearDot(item) {
@@ -176,105 +194,85 @@ window.wallpaperPropertyListener = {
     applyUserProperties: function (properties) {
         var time = ["h", "m", "s", "12hr"];
         var divide = ["D", "DD"];
-        var dotColorR = 'rgb(' + "0 0 0" + ')';
+        var dotColor = 'rgb(' + "0, 0, 0" + ')';
 
         //  BackgroundColor
         if (properties.schemecolor) {
             // Convert the scheme color to be applied as a CSS style
             var schemeColor = properties.schemecolor.value.split(' ');
-            schemeColor = schemeColor.map(function (c) {
-                return Math.ceil(c * 255);
-            });
-            var schemeColorAsCSS = 'rgb(' + schemeColor + ')';
-            document.body.style.backgroundColor = schemeColorAsCSS;
+            schemeColor = RGBString(schemeColor)
+            document.body.style.backgroundColor = schemeColor;
+        }
+        // Party-mode
+        if (properties.party) {
+            party = properties.party.value;
         }
 
         // ClockColor
         if (properties.customcolor1) {
-            // Convert the custom color tso be applied as a CSS style
+            // Convert the custom color to be applied as a CSS style
             var dotColor = properties.customcolor1.value.split(' ');
-            dotColor = dotColor.map(function (c) {
-                return Math.ceil(c * 255);
-            });
-            dotColorR = 'rgb(' + dotColor + ')';
-
-
-            var x = document.getElementsByClassName("round");
-            for (var i = 0; i < x.length; i++) {
-                var dot = x[i];
-                dot.style.backgroundColor = dotColorR;
-                dot.style.boxShadow = "0px 0px " + myIntValue + "px " + dotColorR;
-            }
-
+            dotColor = RGBString(dotColor);
+            var dots = [...document.getElementsByClassName("round")];
+            dots = dots.map(dot => {
+                dot.style.backgroundColor = dotColor;
+                dot.style.boxShadow = "0px 0px " + myIntValue + "px " + dotColor;
+                return dot;
+            })
         }
         //Color Hours
         if (properties.customcolor2) {
             // Convert the custom color to be applied as a CSS style
             var hColor = properties.customcolor2.value.split(' ');
-            hColor = hColor.map(function (c) {
-                return Math.ceil(c * 255);
-            });
-            hColorR = 'rgb(' + hColor + ')';
-
-            for (var ii = 1; ii <= 77; ii++) {
-                var node4 = document.getElementById(time[0] + ii);
-                node4.style.backgroundColor = hColorR;
-                node4.style.boxShadow = "0px 0px " + myIntValue + "px " + hColorR;
-            }
+            hColor = RGBString(hColor);
+            var dots = [...document.getElementsByClassName("hours")];
+            dots = dots.map(dot => {
+                dot.style.backgroundColor = hColor;
+                dot.style.boxShadow = "0px 0px " + myIntValue + "px " + hColor;
+                return dot;
+            })
         }
         //Color Mins
         if (properties.customcolor3) {
             // Convert the custom color to be applied as a CSS style
             var mColor = properties.customcolor3.value.split(' ');
-            mColor = mColor.map(function (c) {
-                return Math.ceil(c * 255);
-            });
-            mColorR = 'rgb(' + mColor + ')';
-
-            for (var iii = 1; iii <= 77; iii++) {
-                var node5 = document.getElementById(time[1] + iii);
-                node5.style.backgroundColor = mColorR;
-                node5.style.boxShadow = "0px 0px " + myIntValue + "px " + mColorR;
-            }
+            mColor = RGBString(mColor);
+            var dots = [...document.getElementsByClassName("mins")];
+            dots = dots.map(dot => {
+                dot.style.backgroundColor = mColor;
+                dot.style.boxShadow = "0px 0px " + myIntValue + "px " + mColor;
+                return dot;
+            })
         }
         //Color Secs
         if (properties.customcolor4) {
             // Convert the custom color to be applied as a CSS style
             var sColor = properties.customcolor4.value.split(' ');
-            sColor = sColor.map(function (c) {
-                return Math.ceil(c * 255);
-            });
-            sColorR = 'rgb(' + sColor + ')';
-
-            for (var iiii = 1; iiii <= 77; iiii++) {
-                var node6 = document.getElementById(time[2] + iiii);
-                node6.style.backgroundColor = sColorR;
-                node6.style.boxShadow = "0px 0px " + myIntValue + "px " + sColorR;
-            }
+            sColor = RGBString(sColor);
+            var dots = [...document.getElementsByClassName("secs")];
+            dots = dots.map(dot => {
+                dot.style.backgroundColor = sColor;
+                dot.style.boxShadow = "0px 0px " + myIntValue + "px " + sColor;
+                return dot;
+            })
         }
 
         //  Change Glowsize
         if (properties.glowSlider) {
             myIntValue = properties.glowSlider.value;
-            var x = document.getElementsByClassName("round");
-            for (var i = 0; i < x.length; i++) {
-                var color = x[i].style.backgroundColor;
-                x[i].style.boxShadow = "0px 0px " + myIntValue + "px " + color;
-            }
-
+            var dots = [...document.getElementsByClassName("round")];
+            dots = dots.map(dot => {
+                var color = dot.style.backgroundColor;
+                dot.style.boxShadow = "0px 0px " + myIntValue + "px " + color;
+                return dot;
+            })
         }
+
         // Change Clocksize
         if (properties.sizeSlider) {
             mySizeValue = properties.sizeSlider.value;
             var x = document.getElementsByClassName("round");
-            for (var i = 0; i < x.length; i++) {
-                var dot = x[i];
-                var color = dot.style.backgroundColor;
-                dot.style.width = mySizeValue * 6 + "px";
-                dot.style.height = mySizeValue * 6 + "px";
-                dot.style.borderRadius = mySizeValue * 3 + "px";
-                dot.style.margin = mySizeValue + "px";
-            }
+
             //Container width
             times.forEach(element => {
                 document.getElementById(element).style.width = mySizeValue * 8 * 11 + "px";
@@ -284,6 +282,13 @@ window.wallpaperPropertyListener = {
                 document.getElementById(element).style.width = mySizeValue * 8 + "px";
                 document.getElementById(element).style.margin = mySizeValue * 4 + "px";
             });
+            for (var i = 0; i < x.length; i++) {
+                var dot = x[i];
+                dot.style.width = mySizeValue * 6 + "px";
+                dot.style.height = mySizeValue * 6 + "px";
+                dot.style.borderRadius = mySizeValue * 3 + "px";
+                dot.style.margin = mySizeValue + "px";
+            }
         }
 
         //POSITION Y
